@@ -1,6 +1,7 @@
 import { pickLongestLayer } from "./pickLongestLayer";
 
-const mock = {
+import { Structure } from "./types";
+const mock: Structure = {
   31: [
     { AA: "31", B: "1", CC: "010", DD: "03" },
     { AA: "31", B: "1", CC: "020", DD: "04" },
@@ -22,4 +23,7 @@ const mock = {
 
 test("test", () => {
   expect(1).toBe(1);
+  // const [layer, remains] = pickLongestLayer(mock);
+
+  // expect(layer[0]).toBe(1);
 });

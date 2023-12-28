@@ -1,6 +1,8 @@
 import { parseName } from "./parseName";
+
 import { constructName } from "./constructName";
-export const sortIntoDetails = (files = []) => {
+
+export const sortIntoDetails = (files: string[] = []) => {
   const objects = files.map((file) => parseName(file));
   const groups = objects.reduce((acc, curr) => {
     if (acc[curr.AA]) {
@@ -12,6 +14,5 @@ export const sortIntoDetails = (files = []) => {
     return acc;
   }, {});
 
-  console.log("DETAILS", groups);
   return groups;
 };

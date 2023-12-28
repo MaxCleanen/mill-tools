@@ -1,6 +1,6 @@
 import { sortIntoSeries } from "./sortIntoSeries";
 
-test("test", () => {
+test("Сортировка по сериям работает корректно", () => {
   const series = sortIntoSeries([
     "c31-s1-n010-t02.NC",
     "c35-s1-n010-t03.NC",

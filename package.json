@@ -2,13 +2,20 @@
   "name": "sort-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": { "test": "node --experimental-vm-modules ./node_modules/.bin/jest" },
+  "main": ".script-shaker/index.js",
+  "scripts": {
+    "test": "jest",
+    "GCodeReport": "node ./tools/GCode_report",
+    "prepare": "husky install"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.7.0"
+    "@types/jest": "^29.5.11",
+    "husky": "^8.0.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
   },
-
   "type": "module"
 }

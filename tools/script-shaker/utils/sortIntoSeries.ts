@@ -1,8 +1,9 @@
 import { parseName } from "./parseName";
 import { constructName } from "./constructName";
+import { IRecord } from "./types";
 
-export const sortIntoSeries = (files = []) => {
-  const objects = files.map((file) => parseName(file));
+export const sortIntoSeries = (fileNames: string[] = []) => {
+  const objects: IRecord[] = fileNames.map((file) => parseName(file));
 
   const groups = objects.reduce((acc, curr) => {
     if (acc[curr.B]) {
@@ -12,8 +13,6 @@ export const sortIntoSeries = (files = []) => {
     }
     return acc;
   }, {});
-
-  // console.log("SERIES", groups);
 
   return groups;
 };

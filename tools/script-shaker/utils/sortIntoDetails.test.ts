@@ -1,7 +1,7 @@
 import { constructName } from "./constructName";
 import { sortIntoDetails } from "./sortIntoDetails";
 
-test("test", () => {
+test("Сортировка по деталям работает корректно", () => {
   const instruments = sortIntoDetails([
     "c31-s1-n020-t04.NC",
     "c41-s1-n020-t03.NC",
