@@ -29,7 +29,7 @@ const fileNames = [
 ];
 
 test("Рассортировка правильная", () => {
-  const result = shakeFileNames(fileNames);
+  const result = shakeFileNames(fileNames, 1, "o1");
   expect(result["c31-s1-n010-t02.NC"]).toBe("o1-b1-s1-c31-t02.NC");
   expect(result["c41-s1-n010-t02.NC"]).toBe("o1-b1-s2-c41-t02.NC");
 

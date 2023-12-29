@@ -3,7 +3,11 @@ import { findMostFrequentNumber } from "./findMostFrequentNumber";
 import { getTopLayer } from "./getTopLayer";
 import { sortIntoDetails } from "./sortIntoDetails";
 
-export const shakeFileNames = (fileNames: string[], batchNum: number = 1) => {
+export const shakeFileNames = (
+  fileNames: string[],
+  batchNum: number = 1,
+  o: string
+) => {
   const result = {};
   const details = sortIntoDetails(fileNames);
 
@@ -15,7 +19,7 @@ export const shakeFileNames = (fileNames: string[], batchNum: number = 1) => {
   const batch = topLayer.filter((x) => Number(x.DD) === mostFrequentInstrument);
 
   batch.forEach((p, idx) => {
-    result[constructName(p)] = `o1-b${batchNum}-s${idx + 1}-c${p.AA}-t${
+    result[constructName(p)] = `${o}-b${batchNum}-s${idx + 1}-c${p.AA}-t${
       p.DD
     }.NC`;
   });
@@ -44,7 +48,7 @@ export const shakeFileNames = (fileNames: string[], batchNum: number = 1) => {
     ++batchNum;
     return {
       ...result,
-      ...shakeFileNames(fileNames, batchNum),
+      ...shakeFileNames(fileNames, batchNum, o),
     };
   }
   return result;
