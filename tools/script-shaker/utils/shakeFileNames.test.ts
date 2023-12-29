@@ -1,4 +1,4 @@
-import { main } from ".";
+import { shakeFileNames } from "./shakeFileNames";
 
 const fileNames = [
   "c31-s1-n010-t02.NC",
@@ -9,7 +9,7 @@ const fileNames = [
   "c31-s1-n020-t01.NC",
   "c33-s1-n020-t02.NC",
   "c35-s1-n020-t04.NC",
-  "c41-s1-n020-t05.NC",
+  "c41-s1-n020-t05.NC", //last
   "c45-s1-n020-t03.NC",
   "c31-s1-n030-t03.NC",
   "c33-s1-n030-t05.NC",
@@ -29,7 +29,7 @@ const fileNames = [
 ];
 
 test("Рассортировка правильная", () => {
-  const result = main(fileNames);
+  const result = shakeFileNames(fileNames);
   expect(result["c31-s1-n010-t02.NC"]).toBe("o1-b1-s1-c31-t02.NC");
   expect(result["c41-s1-n010-t02.NC"]).toBe("o1-b1-s2-c41-t02.NC");
 

@@ -1,53 +1,41 @@
-import { constructName } from "./utils/constructName";
-import { findMostFrequentNumber } from "./utils/findMostFrequentNumber";
-import { getTopLayer } from "./utils/getTopLayer";
-import { sortIntoDetails } from "./utils/sortIntoDetails";
+import * as fs from "fs";
+import * as path from "path";
+import { shakeFileNames } from "./utils/shakeFileNames";
 
-export const main = (fileNames: string[], batchNum: number = 1) => {
-  const result = {};
-  const details = sortIntoDetails(fileNames);
+const inputFilePath = path.join(__dirname, "..", "input");
+const outputFilePath = path.join(__dirname, "..", "output");
 
-  const topLayer = getTopLayer(details);
+fs.readdir(inputFilePath, (err, files) => {
+  if (err) {
+    console.log("ERROR: ", JSON.stringify(err));
+  } else {
+    const structure = shakeFileNames(files);
 
-  const mostFrequentInstrument = findMostFrequentNumber(
-    topLayer.map((x) => Number(x.DD))
-  );
-  const batch = topLayer.filter((x) => Number(x.DD) === mostFrequentInstrument);
+    fs.mkdir(outputFilePath, { recursive: true }, () => {});
 
-  batch.forEach((p, idx) => {
-    result[constructName(p)] = `o1-b${batchNum}-s${idx + 1}-c${p.AA}-t${
-      p.DD
-    }.NC`;
-  });
-  const batchFileNames = batch.map((m) => constructName(m));
-  fileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
+    for (const [oldFileName, newFileName] of Object.entries<string>(
+      structure
+    )) {
+      console.log(newFileName);
 
-  const next_details = sortIntoDetails(fileNames);
-  const next_topLayer = getTopLayer(next_details);
-  let extraIdx = batch.length + 1;
-
-  const extras = next_topLayer.filter(
-    (x) => Number(x.DD) === mostFrequentInstrument
-  );
-  if (extras.length > 0) {
-    extras.forEach((p) => {
-      result[
-        constructName(p)
-      ] = `o1-b${batchNum}-s${extraIdx}-c${p.AA}-t${p.DD}.NC`;
-      extraIdx++;
-    });
-    const extraFileNames = extras.map((x) => constructName(x));
-    fileNames = fileNames.filter((i) => extraFileNames.indexOf(i) === -1);
+      fs.readFile(
+        path.join(inputFilePath, oldFileName),
+        { encoding: "utf-8" },
+        function (readFileErr, data) {
+          if (!readFileErr) {
+            const fileContent = data;
+            fs.writeFile(
+              path.join(outputFilePath, newFileName),
+              fileContent,
+              (writeFileErr) => {
+                if (writeFileErr) {
+                  throw writeFileErr;
+                }
+              }
+            );
+          }
+        }
+      );
+    }
   }
-
-  if (fileNames.length > 0) {
-    ++batchNum;
-    return {
-      ...result,
-      ...main(fileNames, batchNum),
-    };
-  }
-  return result;
-};
-
-main([]);
+});

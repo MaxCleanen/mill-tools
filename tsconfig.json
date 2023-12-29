@@ -1,0 +1,9 @@
+{
+  "files": ["./tools/script-shaker/index.ts"],
+    "compilerOptions": {
+      // "target": "es2015",
+      // or
+      "downlevelIteration": true,
+      "outDir": "./tools/script-shaker/dist",
+    }
+  }
