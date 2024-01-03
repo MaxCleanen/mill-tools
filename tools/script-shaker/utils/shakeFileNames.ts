@@ -14,14 +14,16 @@ export const shakeFileNames = (
   const topLayer = getTopLayer(details);
 
   const mostFrequentInstrument = findMostFrequentNumber(
-    topLayer.map((x) => Number(x.DD))
+    topLayer.map((x) => Number(x.Tool))
   );
-  const batch = topLayer.filter((x) => Number(x.DD) === mostFrequentInstrument);
+  const batch = topLayer.filter(
+    (x) => Number(x.Tool) === mostFrequentInstrument
+  );
 
   batch.forEach((p, idx) => {
-    result[constructName(p)] = `${o}-b${batchNum}-s${idx + 1}-c${p.AA}-t${
-      p.DD
-    }.NC`;
+    result[constructName(p)] = `${o}-b${batchNum}-s${idx + 1}|${constructName(
+      p
+    )}`;
   });
   const batchFileNames = batch.map((m) => constructName(m));
   fileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
@@ -31,13 +33,13 @@ export const shakeFileNames = (
   let extraIdx = batch.length + 1;
 
   const extras = next_topLayer.filter(
-    (x) => Number(x.DD) === mostFrequentInstrument
+    (x) => Number(x.Tool) === mostFrequentInstrument
   );
   if (extras.length > 0) {
     extras.forEach((p) => {
-      result[
-        constructName(p)
-      ] = `o1-b${batchNum}-s${extraIdx}-c${p.AA}-t${p.DD}.NC`;
+      result[constructName(p)] = `o1-b${batchNum}-s${extraIdx}|${constructName(
+        p
+      )}`;
       extraIdx++;
     });
     const extraFileNames = extras.map((x) => constructName(x));

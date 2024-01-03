@@ -1,8 +1,8 @@
 export interface IRecord {
-  AA: string;
-  B: string;
-  CC: string;
-  DD: string;
+  Detail: string;
+  SeriesNum: string;
+  Step: string;
+  Tool: string;
 }
 
 export interface Structure {

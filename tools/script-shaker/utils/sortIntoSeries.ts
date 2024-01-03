@@ -6,10 +6,10 @@ export const sortIntoSeries = (fileNames: string[] = []) => {
   const objects: IRecord[] = fileNames.map((file) => parseName(file));
 
   const groups = objects.reduce((acc, curr) => {
-    if (acc[curr.B]) {
-      acc[curr.B].push(constructName(curr));
+    if (acc[curr.SeriesNum]) {
+      acc[curr.SeriesNum].push(constructName(curr));
     } else {
-      acc[curr.B] = [constructName(curr)];
+      acc[curr.SeriesNum] = [constructName(curr)];
     }
     return acc;
   }, {});

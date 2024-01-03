@@ -6,9 +6,9 @@ export const parseName = (fileName: string): IRecord => {
   }
 
   return {
-    AA: /c(\d+)/.exec(fileName)?.[1] ?? "",
-    B: /s(\d+)/.exec(fileName)?.[1] ?? "",
-    CC: /n(\d+)/.exec(fileName)?.[1] ?? "",
-    DD: /t(\d+)/.exec(fileName)?.[1] ?? "",
+    Detail: /c(\d+)/.exec(fileName)?.[1] ?? "",
+    SeriesNum: /s(\d+)/.exec(fileName)?.[1] ?? "",
+    Step: /n(\d+)/.exec(fileName)?.[1] ?? "",
+    Tool: /t(\d+)/.exec(fileName)?.[1] ?? "",
   };
 };
