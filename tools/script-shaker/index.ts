@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { shakeFileNames } from "./utils/shakeFileNames";
 import { sortIntoSeries } from "./utils/sortIntoSeries";
+import { sortIntoTurns } from "./utils/sortIntoOddsEvens";
 
 const inputFilePath = path.join(__dirname, "..", "input");
 const outputFilePath = path.join(__dirname, "..", "output");
@@ -10,11 +11,18 @@ fs.readdir(inputFilePath, (err, files) => {
   if (err) {
     console.log("ERROR: ", JSON.stringify(err));
   } else {
+    // const turns = sortIntoTurns(files);
+    // for (const [turnNum, turnFiles] of Object.entries<string[]>(turns)) {
+    // }
+
     const series = sortIntoSeries(files);
+
+    // console.log("LOGGG series", series);
     let oddCount = 0;
     let evenCount = 0;
     for (const [groupNum, groupFiles] of Object.entries<string[]>(series)) {
-      const isEven = Number(groupNum) % 2 === 0;
+      const isEven = Number(groupNum) % 2 !== 0;
+      //odd четный, even -- нечетный
       if (isEven) {
         evenCount++;
       } else {
@@ -24,7 +32,9 @@ fs.readdir(inputFilePath, (err, files) => {
       const structure = shakeFileNames(
         groupFiles,
         1,
-        isEven ? "e" + evenCount : "o" + oddCount
+        // isEven ? "e" + evenCount : "o" + oddCount
+        isEven ? "e" : "o",
+        isEven ? evenCount : oddCount
       );
 
       fs.mkdir(outputFilePath, { recursive: true }, () => {});

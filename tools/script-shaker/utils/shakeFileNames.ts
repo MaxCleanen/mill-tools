@@ -6,7 +6,8 @@ import { sortIntoDetails } from "./sortIntoDetails";
 export const shakeFileNames = (
   fileNames: string[],
   batchNum: number = 1,
-  o: string
+  o: string,
+  oCount: number
 ) => {
   const result = {};
   const details = sortIntoDetails(fileNames);
@@ -21,9 +22,9 @@ export const shakeFileNames = (
   );
 
   batch.forEach((p, idx) => {
-    result[constructName(p)] = `${o}-b${batchNum}-s${idx + 1}|${constructName(
-      p
-    )}`;
+    result[constructName(p)] = `${o}${oCount}-b${batchNum}-s${
+      idx + 1
+    }|${constructName(p)}`;
   });
   const batchFileNames = batch.map((m) => constructName(m));
   fileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
@@ -37,9 +38,9 @@ export const shakeFileNames = (
   );
   if (extras.length > 0) {
     extras.forEach((p) => {
-      result[constructName(p)] = `o1-b${batchNum}-s${extraIdx}|${constructName(
-        p
-      )}`;
+      result[
+        constructName(p)
+      ] = `${o}${oCount}-b${batchNum}-s${extraIdx}|${constructName(p)}`;
       extraIdx++;
     });
     const extraFileNames = extras.map((x) => constructName(x));
@@ -50,7 +51,7 @@ export const shakeFileNames = (
     ++batchNum;
     return {
       ...result,
-      ...shakeFileNames(fileNames, batchNum, o),
+      ...shakeFileNames(fileNames, batchNum, o, oCount),
     };
   }
   return result;

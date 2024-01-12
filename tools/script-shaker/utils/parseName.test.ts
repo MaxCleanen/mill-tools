@@ -1,6 +1,6 @@
 import { parseName } from "./parseName";
 
-test.only("Парсинг названия файла работает корректно", () => {
+test("Парсинг названия файла работает корректно", () => {
   const object = parseName("c31-s1-n010-t02.NC");
 
   expect(object.Detail).toBe("31");
