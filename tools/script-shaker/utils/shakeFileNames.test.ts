@@ -1,7 +1,7 @@
 import { shakeFileNames } from "./shakeFileNames";
 
 test("Рассортировка правильная", () => {
-  const result = shakeFileNames(
+  const { fileNamesMap: result, lastBatchName } = shakeFileNames(
     [
       "c31-s1-n010-t02.NC",
       "c33-s1-n010-t04.NC",
@@ -30,9 +30,10 @@ test("Рассортировка правильная", () => {
       "c45-s1-n050-t01.NC",
     ],
     1,
-    "o",
-    1
+    "o1"
   );
+
+  expect(lastBatchName).toBe(15);
   expect(result["c31-s1-n010-t02.NC"]).toBe("o1-b1-s1|c31-s1-n010-t02.NC");
   expect(result["c41-s1-n010-t02.NC"]).toBe("o1-b1-s2|c41-s1-n010-t02.NC");
 
@@ -77,7 +78,7 @@ test("Рассортировка правильная", () => {
 });
 
 test("Две одинаковых детали. Рассортировка правильная", () => {
-  const result = shakeFileNames(
+  const { fileNamesMap: result, lastBatchName } = shakeFileNames(
     [
       "c01-s1-n10-t11.NC",
       "c01-s1-n20-t01.NC",
@@ -95,9 +96,10 @@ test("Две одинаковых детали. Рассортировка пр�
       "c05-s1-n70-t01.NC",
     ],
     1,
-    "o",
-    1
+    "o1"
   );
+
+  expect(lastBatchName).toBe(6);
   expect(result["c01-s1-n10-t11.NC"]).toBe("o1-b1-s1|c01-s1-n10-t11.NC");
   expect(result["c01-s1-n20-t01.NC"]).toBe("o1-b2-s1|c01-s1-n20-t01.NC");
   expect(result["c01-s1-n30-t07.NC"]).toBe("o1-b3-s1|c01-s1-n30-t07.NC");

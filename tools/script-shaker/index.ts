@@ -11,36 +11,21 @@ fs.readdir(inputFilePath, (err, files) => {
   if (err) {
     console.log("ERROR: ", JSON.stringify(err));
   } else {
-    // const turns = sortIntoTurns(files);
-    // for (const [turnNum, turnFiles] of Object.entries<string[]>(turns)) {
-    // }
-
     const series = sortIntoSeries(files);
 
-    // console.log("LOGGG series", series);
-    let oddCount = 0;
-    let evenCount = 0;
-    for (const [groupNum, groupFiles] of Object.entries<string[]>(series)) {
-      const isEven = Number(groupNum) % 2 !== 0;
-      //odd четный, even -- нечетный
-      if (isEven) {
-        evenCount++;
-      } else {
-        oddCount++;
-      }
-
-      const structure = shakeFileNames(
+    let batchNum = 1;
+    for (const [_, groupFiles] of Object.entries<string[]>(series)) {
+      const { fileNamesMap, lastBatchName } = shakeFileNames(
         groupFiles,
-        1,
-        // isEven ? "e" + evenCount : "o" + oddCount
-        isEven ? "e" : "o",
-        isEven ? evenCount : oddCount
+        batchNum,
+        "e1"
       );
+      batchNum = lastBatchName + 1;
 
       fs.mkdir(outputFilePath, { recursive: true }, () => {});
 
       for (const [oldFileName, newFileName] of Object.entries<string>(
-        structure
+        fileNamesMap
       )) {
         fs.readFile(
           path.join(inputFilePath, oldFileName),

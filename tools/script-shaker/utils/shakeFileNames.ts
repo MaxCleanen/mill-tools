@@ -6,12 +6,10 @@ import { sortIntoDetails } from "./sortIntoDetails";
 export const shakeFileNames = (
   fileNames: string[],
   batchNum: number = 1,
-  o: string,
-  oCount: number
+  o: string
 ) => {
   const result = {};
   const details = sortIntoDetails(fileNames);
-
   const topLayer = getTopLayer(details);
 
   const mostFrequentInstrument = findMostFrequentNumber(
@@ -21,12 +19,12 @@ export const shakeFileNames = (
     (x) => Number(x.Tool) === mostFrequentInstrument
   );
 
+  const batchFileNames = [];
   batch.forEach((p, idx) => {
-    result[constructName(p)] = `${o}${oCount}-b${batchNum}-s${
-      idx + 1
-    }|${constructName(p)}`;
+    const name = constructName(p);
+    result[name] = `${o}-b${batchNum}-s${idx + 1}|${name}`;
+    batchFileNames.push(name);
   });
-  const batchFileNames = batch.map((m) => constructName(m));
   fileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
 
   const next_details = sortIntoDetails(fileNames);
@@ -37,22 +35,35 @@ export const shakeFileNames = (
     (x) => Number(x.Tool) === mostFrequentInstrument
   );
   if (extras.length > 0) {
+    // const extraFileNames = [];
     extras.forEach((p) => {
-      result[
-        constructName(p)
-      ] = `${o}${oCount}-b${batchNum}-s${extraIdx}|${constructName(p)}`;
+      const name = constructName(p);
+      result[name] = `${o}-b${batchNum}-s${extraIdx}|${name}`;
       extraIdx++;
+      batchFileNames.push(name);
     });
-    const extraFileNames = extras.map((x) => constructName(x));
-    fileNames = fileNames.filter((i) => extraFileNames.indexOf(i) === -1);
   }
+  fileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
 
   if (fileNames.length > 0) {
-    ++batchNum;
+    // ++batchNum;
+
+    const { lastBatchName, fileNamesMap } = shakeFileNames(
+      fileNames,
+      batchNum + 1,
+      o
+    );
     return {
-      ...result,
-      ...shakeFileNames(fileNames, batchNum, o, oCount),
+      lastBatchName: lastBatchName,
+      fileNamesMap: {
+        ...result,
+        ...fileNamesMap,
+      },
     };
   }
-  return result;
+
+  return {
+    lastBatchName: batchNum,
+    fileNamesMap: result,
+  };
 };
