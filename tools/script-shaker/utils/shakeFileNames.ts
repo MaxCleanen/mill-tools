@@ -24,7 +24,7 @@ const findExtras = (
     // const extraFileNames = [];
     extras.forEach((p) => {
       const name = constructName(p);
-      result[name] = `${oNum}-b${batchNum}-s${stepOffset}|${name}`;
+      result[name] = `${oNum}-b${batchNum}-s${stepOffset}--${name}`;
       stepOffset++;
       batchFileNames.push(name);
     });
@@ -80,7 +80,7 @@ export const shakeFileNames = (
 
   batch.forEach((p, idx) => {
     const name = constructName(p);
-    result[name] = `${oNum}-b${batchNum}-s${idx + 1}|${name}`;
+    result[name] = `${oNum}-b${batchNum}-s${idx + 1}--${name}`;
     batchFileNames.push(name);
   });
   let leftFileNames = fileNames.filter((i) => batchFileNames.indexOf(i) === -1);
