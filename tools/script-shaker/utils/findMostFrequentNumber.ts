@@ -1,5 +1,5 @@
-export const findMostFrequentNumber = (arr: number[] = []): number => {
-  const numDict = arr.reduce((acc, curr) => {
+export const findMostFrequentTool = (toolNums: number[] = []): number => {
+  const numDict: { [key: number]: number } = toolNums.reduce((acc, curr) => {
     if (acc[curr]) {
       acc[curr] = acc[curr] + 1;
     } else {
@@ -7,16 +7,6 @@ export const findMostFrequentNumber = (arr: number[] = []): number => {
     }
     return acc;
   }, {});
-
-  let result: string | undefined = undefined;
-  let counter = -1;
-
-  for (const [key, value] of Object.entries<number>(numDict)) {
-    if (value > counter) {
-      result = key;
-      counter = value;
-    }
-  }
-
+  const [[result]] = Object.entries(numDict).sort((a, b) => b[1] - a[1]);
   return Number(result);
 };
