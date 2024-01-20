@@ -15,6 +15,5 @@ export const sortIntoTurns = (fileNames: string[] = []) => {
     return acc;
   }, {});
 
-  console.log("LOGGG turns", turns);
   return turns;
 };
